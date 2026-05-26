@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Contra - Push Chain Edition</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            font-family: 'Courier New', monospace;
+            color: white;
+        }
+
+        #gameCanvas {
+            border: 2px solid #ff4444;
+            display: block;
+        }
+
+        #ui {
+            width: 600px;
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            font-size: 14px;
+        }
+
+        #walletSection {
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        button {
+            background: #ff4444;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            cursor: pointer;
+            font-size: 13px;
+            border-radius: 4px;
+            margin: 4px;
+        }
+
+        button:hover { background: #cc0000; }
+        button:disabled { background: #555; cursor: not-allowed; }
+
+        #status {
+            font-size: 12px;
+            color: #aaa;
+            margin-top: 6px;
+        }
+
+        #leaderboard {
+            margin-top: 10px;
+            width: 600px;
+            background: #111;
+            border: 1px solid #333;
+            padding: 10px;
+            font-size: 12px;
+            max-height: 120px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Score Display UI -->
+    <div id="ui">
+        <span>❤️ Lives: <span id="livesDisplay">3</span></span>
+        <span>🏆 Score: <span id="scoreDisplay">0</span></span>
+        <span>🎯 Level: <span id="levelDisplay">1</span></span>
+        <span>👾 Killed: <span id="enemyDisplay">0</span></span>
+    </div>
+
+    <!-- Main Game Canvas -->
+    <canvas id="gameCanvas" width="600" height="400"></canvas>
+
+    <!-- Wallet and Blockchain Controls -->
+    <div id="walletSection">
+        <button id="connectBtn" onclick="connectWallet()">
+            🦊 Connect MetaMask
+        </button>
+        <button id="submitBtn" onclick="submitScore()" disabled>
+            ⛓️ Submit Score On-Chain
+        </button>
+        <button onclick="loadLeaderboard()">
+            📊 View Leaderboard
+        </button>
+        <div id="status">Connect MetaMask to enable blockchain features</div>
+    </div>
+
+    <!-- Leaderboard Display -->
+    <div id="leaderboard">
+        <strong>🏆 Global Leaderboard (Push Chain)</strong>
+        <div id="leaderboardData">Loading leaderboard...</div>
+    </div>
+
+    <!-- Controls Info -->
+    <div style="margin-top:8px; font-size:11px; color:#666;">
+        ⌨️ Controls: Arrow Keys = Move &amp; Jump | Space = Shoot | R = Restart
+    </div>
+
+    <!-- Load ethers.js from CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/ethers.umd.min.js"></script>
+
+    <!-- Load our scripts -->
+    <script src="blockchain.js"></script>
+    <script src="game.js"></script>
+
+</body>
+</html>
